@@ -1,0 +1,1330 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/9/2024 3:15:16 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="7AMMAD404"
+  DTS:CreatorName="7ammad404\7ammad"
+  DTS:DTSID="{0CAB55C7-03C7-434A-ADA5-1CE8E9414254}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5556.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="COVID19_STAGING_ETL"
+  DTS:PackageType="5"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{78877E2B-465F-4F16-8BA2-771CC70ECDF4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[7AMMAD404\SQLEXPRESS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{FD7975A1-398D-458D-B7EA-CB720AF2A688}"
+      DTS:ObjectName="7AMMAD404\SQLEXPRESS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=7AMMAD404\SQLEXPRESS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-COVID19_STAGING_ETL-{FD7975A1-398D-458D-B7EA-CB720AF2A688}7AMMAD404\SQLEXPRESS;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[7AMMAD404\SQLEXPRESS.COVID19]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AD98BF5C-07F8-4F09-8399-710E5D6822AF}"
+      DTS:ObjectName="7AMMAD404\SQLEXPRESS.COVID19">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=7AMMAD404\SQLEXPRESS;Initial Catalog=COVID19;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-COVID19_STAGING_ETL-{AD98BF5C-07F8-4F09-8399-710E5D6822AF}7AMMAD404\SQLEXPRESS.COVID19;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{37C05BFE-514A-42D1-B222-3ED6580B453B}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Career\JADARA SOLUTIONS\0project\COVID-19 DATA.xlsx;Extended Properties=&quot;Excel 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{4576EEFE-9D07-4AD9-A6D1-56FE79F3067D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input].Columns[COV_DTH]"
+                      cachedDataType="i4"
+                      cachedName="COV_DTH"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input].Columns[COV_TRM]"
+                      cachedDataType="i4"
+                      cachedName="COV_TRM"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[DTH]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[DTH]"
+                      name="DTH"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]} == 1 ? "Yes" : #{Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]} == 2 ? "No" : "Not Stated"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">COV_DTH == 1 ? "Yes" : COV_DTH == 2 ? "No" : "Not Stated"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[TRM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="44"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[TRM]"
+                      name="TRM"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]} == 1 ? "Domestic acquisition - Contact of COVID case" : #{Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]} == 2 ? "International travel" : "Not Stated"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">COV_TRM == 1 ? "Domestic acquisition - Contact of COVID case" : COV_TRM == 2 ? "International travel" : "Not Stated"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\Extract COVID Data"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Extract COVID Data"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">'COVID-19 Data$'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\Extract COVID Data.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_ID]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ID]"
+                      name="COV_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_REG]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_REG]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_REG]"
+                      name="COV_REG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[REG_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[REG_NAME]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[REG_NAME]"
+                      name="REG_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EW]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EW]"
+                      name="COV_EW"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EWG]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EWG]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EWG]"
+                      name="COV_EWG"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EY]"
+                      name="COV_EY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[EY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[EY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[EY]"
+                      name="EY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_GDR]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_GDR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_GDR]"
+                      name="COV_GDR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[GDR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[GDR]"
+                      length="10"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[GDR]"
+                      name="GDR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_AGR]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_AGR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_AGR]"
+                      name="COV_AGR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[AGR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[AGR]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[AGR]"
+                      name="AGR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OCC]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OCC]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OCC]"
+                      name="COV_OCC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OCC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[OCC]"
+                      length="50"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OCC]"
+                      name="OCC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ASM]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_ASM]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ASM]"
+                      name="COV_ASM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[ASM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[ASM]"
+                      length="20"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[ASM]"
+                      name="ASM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OW]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OW]"
+                      name="COV_OW"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OY]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OY]"
+                      name="COV_OY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[OY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OY]"
+                      name="OY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_HSP]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_HSP]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_HSP]"
+                      name="COV_HSP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[HSP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[HSP]"
+                      length="100"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[HSP]"
+                      name="HSP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RSV]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RSV]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RSV]"
+                      name="COV_RSV"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RSV]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[RSV]"
+                      length="15"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RSV]"
+                      name="RSV"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RW]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RW]"
+                      name="COV_RW"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RY]"
+                      name="COV_RY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[RY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RY]"
+                      name="RY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_DTH]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]"
+                      name="COV_DTH"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_TRM]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]"
+                      name="COV_TRM"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_ID]"
+                      dataType="r8"
+                      name="COV_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_REG]"
+                      dataType="r8"
+                      name="COV_REG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[REG_NAME]"
+                      dataType="wstr"
+                      length="255"
+                      name="REG_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EW]"
+                      dataType="r8"
+                      name="COV_EW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EWG]"
+                      dataType="r8"
+                      name="COV_EWG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_EY]"
+                      dataType="r8"
+                      name="COV_EY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[EY]"
+                      dataType="r8"
+                      name="EY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_GDR]"
+                      dataType="r8"
+                      name="COV_GDR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[GDR]"
+                      dataType="wstr"
+                      length="255"
+                      name="GDR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_AGR]"
+                      dataType="r8"
+                      name="COV_AGR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[AGR]"
+                      dataType="wstr"
+                      length="255"
+                      name="AGR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OCC]"
+                      dataType="r8"
+                      name="COV_OCC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[OCC]"
+                      dataType="wstr"
+                      length="255"
+                      name="OCC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_ASM]"
+                      dataType="r8"
+                      name="COV_ASM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[ASM]"
+                      dataType="wstr"
+                      length="255"
+                      name="ASM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OW]"
+                      dataType="r8"
+                      name="COV_OW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_OY]"
+                      dataType="r8"
+                      name="COV_OY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[OY]"
+                      dataType="r8"
+                      name="OY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_HSP]"
+                      dataType="r8"
+                      name="COV_HSP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[HSP]"
+                      dataType="wstr"
+                      length="255"
+                      name="HSP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RSV]"
+                      dataType="r8"
+                      name="COV_RSV" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[RSV]"
+                      dataType="wstr"
+                      length="255"
+                      name="RSV" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RW]"
+                      dataType="r8"
+                      name="COV_RW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_RY]"
+                      dataType="r8"
+                      name="COV_RY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[RY]"
+                      dataType="r8"
+                      name="RY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_DTH]"
+                      dataType="r8"
+                      name="COV_DTH" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].ExternalColumns[COV_TRM]"
+                      dataType="r8"
+                      name="COV_TRM" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_ID]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_ID]"
+                      name="COV_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_REG]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_REG]"
+                      name="COV_REG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[REG_NAME]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[REG_NAME]"
+                      name="REG_NAME" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EW]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EW]"
+                      name="COV_EW" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EWG]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EWG]"
+                      name="COV_EWG" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_EY]"
+                      name="COV_EY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[EY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[EY]"
+                      name="EY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_GDR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_GDR]"
+                      name="COV_GDR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[GDR]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[GDR]"
+                      name="GDR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_AGR]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_AGR]"
+                      name="COV_AGR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[AGR]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[AGR]"
+                      name="AGR" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OCC]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OCC]"
+                      name="COV_OCC" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[OCC]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[OCC]"
+                      name="OCC" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_ASM]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_ASM]"
+                      name="COV_ASM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ASM]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ASM]"
+                      name="ASM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OW]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OW]"
+                      name="COV_OW" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_OY]"
+                      name="COV_OY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[OY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[OY]"
+                      name="OY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_HSP]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_HSP]"
+                      name="COV_HSP" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[HSP]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[HSP]"
+                      name="HSP" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RSV]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RSV]"
+                      name="COV_RSV" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[RSV]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[RSV]"
+                      name="RSV" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RW]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RW]"
+                      name="COV_RW" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_RY]"
+                      name="COV_RY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[RY]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[RY]"
+                      name="RY" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_DTH]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_DTH]"
+                      name="COV_DTH" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_TRM]"
+                      dataType="r8"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[COV_TRM]"
+                      name="COV_TRM" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task\SQL Server Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="SQL Server Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[STAGING].[COVID19]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task\SQL Server Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[7AMMAD404\SQLEXPRESS.COVID19]"
+                  connectionManagerRefId="Package.ConnectionManagers[7AMMAD404\SQLEXPRESS.COVID19]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_ID]"
+                      cachedDataType="i4"
+                      cachedName="COV_ID"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_ID]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_REG]"
+                      cachedDataType="i4"
+                      cachedName="COV_REG"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_REG]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_REG]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[REG_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="REG_NAME"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[REG_NAME]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[REG_NAME]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_EW]"
+                      cachedDataType="i4"
+                      cachedName="COV_EW"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EW]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_EWG]"
+                      cachedDataType="i4"
+                      cachedName="COV_EWG"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EWG]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EWG]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_EY]"
+                      cachedDataType="i4"
+                      cachedName="COV_EY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_EY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[EY]"
+                      cachedDataType="i4"
+                      cachedName="EY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[EY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[EY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_GDR]"
+                      cachedDataType="i4"
+                      cachedName="COV_GDR"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_GDR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_GDR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[GDR]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="GDR"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[GDR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[GDR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_AGR]"
+                      cachedDataType="i4"
+                      cachedName="COV_AGR"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_AGR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_AGR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[AGR]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="AGR"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[AGR]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[AGR]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_OCC]"
+                      cachedDataType="i4"
+                      cachedName="COV_OCC"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OCC]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OCC]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[OCC]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="OCC"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[OCC]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OCC]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_ASM]"
+                      cachedDataType="i4"
+                      cachedName="COV_ASM"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_ASM]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_ASM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[ASM]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="ASM"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[ASM]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[ASM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_OW]"
+                      cachedDataType="i4"
+                      cachedName="COV_OW"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OW]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_OY]"
+                      cachedDataType="r8"
+                      cachedName="COV_OY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_OY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[OY]"
+                      cachedDataType="i4"
+                      cachedName="OY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[OY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[OY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_HSP]"
+                      cachedDataType="i4"
+                      cachedName="COV_HSP"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_HSP]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_HSP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[HSP]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="HSP"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[HSP]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[HSP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_RSV]"
+                      cachedDataType="i4"
+                      cachedName="COV_RSV"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RSV]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RSV]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[RSV]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="RSV"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[RSV]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RSV]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_RW]"
+                      cachedDataType="i4"
+                      cachedName="COV_RW"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RW]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RW]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_RY]"
+                      cachedDataType="i4"
+                      cachedName="COV_RY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_RY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[RY]"
+                      cachedDataType="i4"
+                      cachedName="RY"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[RY]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[RY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_DTH]"
+                      cachedDataType="i4"
+                      cachedName="COV_DTH"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_DTH]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_DTH]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[COV_TRM]"
+                      cachedDataType="i4"
+                      cachedName="COV_TRM"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_TRM]"
+                      lineageId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output].Columns[COV_TRM]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[DTH]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DTH"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[DTH]"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[DTH]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].Columns[TRM]"
+                      cachedDataType="wstr"
+                      cachedLength="44"
+                      cachedName="TRM"
+                      externalMetadataColumnId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[TRM]"
+                      lineageId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output].Columns[TRM]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_ID]"
+                      dataType="i4"
+                      name="COV_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_REG]"
+                      dataType="i4"
+                      name="COV_REG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[REG_NAME]"
+                      dataType="wstr"
+                      length="50"
+                      name="REG_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EW]"
+                      dataType="i4"
+                      name="COV_EW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EWG]"
+                      dataType="i4"
+                      name="COV_EWG" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_EY]"
+                      dataType="i4"
+                      name="COV_EY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[EY]"
+                      dataType="i4"
+                      name="EY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_GDR]"
+                      dataType="i4"
+                      name="COV_GDR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[GDR]"
+                      dataType="wstr"
+                      length="10"
+                      name="GDR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_AGR]"
+                      dataType="i4"
+                      name="COV_AGR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[AGR]"
+                      dataType="wstr"
+                      length="20"
+                      name="AGR" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OCC]"
+                      dataType="i4"
+                      name="COV_OCC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[OCC]"
+                      dataType="wstr"
+                      length="50"
+                      name="OCC" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_ASM]"
+                      dataType="i4"
+                      name="COV_ASM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[ASM]"
+                      dataType="wstr"
+                      length="20"
+                      name="ASM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OW]"
+                      dataType="i4"
+                      name="COV_OW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_OY]"
+                      dataType="r8"
+                      name="COV_OY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[OY]"
+                      dataType="i4"
+                      name="OY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_HSP]"
+                      dataType="i4"
+                      name="COV_HSP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[HSP]"
+                      dataType="wstr"
+                      length="100"
+                      name="HSP" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RSV]"
+                      dataType="i4"
+                      name="COV_RSV" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[RSV]"
+                      dataType="wstr"
+                      length="15"
+                      name="RSV" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RW]"
+                      dataType="i4"
+                      name="COV_RW" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_RY]"
+                      dataType="i4"
+                      name="COV_RY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[RY]"
+                      dataType="i4"
+                      name="RY" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_DTH]"
+                      dataType="i4"
+                      name="COV_DTH" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[COV_TRM]"
+                      dataType="i4"
+                      name="COV_TRM" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[DTH]"
+                      dataType="wstr"
+                      length="10"
+                      name="DTH" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input].ExternalColumns[TRM]"
+                      dataType="wstr"
+                      length="44"
+                      name="TRM" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task\SQL Server Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\SQL Server Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task\SQL Server Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task\SQL Server Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task\SQL Server Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task.Paths[Excel Source Output]"
+              endId="Package\Data Flow Task\Derived Column.Inputs[Derived Column Input]"
+              name="Excel Source Output"
+              startId="Package\Data Flow Task\Extract COVID Data.Outputs[Excel Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="150.4,41.6"
+          Id="Package\Data Flow Task"
+          TopLeft="228.333320857751,111.799999222557" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171.2,41.6"
+          Id="Package\Data Flow Task\Extract COVID Data"
+          TopLeft="275.138873855963,40.5888886066388" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Data Flow Task\Derived Column"
+          TopLeft="301.388872421727,139.388887919596" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Excel Source Output]"
+          TopLeft="360.738873855963,82.1888886066389">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="17.0499985657633,57.1999993129572"
+              Start="0,0"
+              End="17.0499985657633,49.6999993129572">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5999996564786" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,24.5999996564786"
+                    Point2="0,28.5999996564786"
+                    Point3="4,28.5999996564786" />
+                  <mssgle:LineSegment
+                    End="13.0499985657633,28.5999996564786" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.0499985657633,28.5999996564786"
+                    Point2="17.0499985657633,28.5999996564786"
+                    Point3="17.0499985657633,32.5999996564786" />
+                  <mssgle:LineSegment
+                    End="17.0499985657633,49.6999993129572" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\Data Flow Task\SQL Server Destination"
+          TopLeft="297.222205982717,226.055553983593" />
+        <EdgeLayout
+          Id="Package\Data Flow Task.Paths[Derived Column Output]"
+          TopLeft="377.788872421727,180.988887919596">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="13.0333335609898,45.0666660639974"
+              Start="0,0"
+              End="13.0333335609898,37.5666660639974">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5333330319987" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.5333330319987"
+                    Point2="0,22.5333330319987"
+                    Point3="4,22.5333330319987" />
+                  <mssgle:LineSegment
+                    End="9.03333356098983,22.5333330319987" />
+                  <mssgle:CubicBezierSegment
+                    Point1="9.03333356098983,22.5333330319987"
+                    Point2="13.0333335609898,22.5333330319987"
+                    Point3="13.0333335609898,26.5333330319987" />
+                  <mssgle:LineSegment
+                    End="13.0333335609898,37.5666660639974" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\Extract COVID Data">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\SQL Server Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
